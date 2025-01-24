@@ -29,7 +29,7 @@ const BottomBar = () => {
       className="h-96 bg-white w-[calc(100vw-400px)] fixed bottom-0 left-96 py-4 border-t border-gray-200"
     >
       {/* Fixed Buttons */}
-      <div className="flex items-center mb-4 sticky top-0 bg-white z-10 p-2">
+      <div className="flex items-center mb-4 sticky top-0 bg-white z-10 p-2 overflow-x-auto no-scrollbar space-x-4">
         {[
           'Coding Tutorials',
           'JavaScript Coding Tutorials',
@@ -41,9 +41,11 @@ const BottomBar = () => {
         ].map((query) => (
           <button
             key={query}
-            className={`px-4 py-2 ${
-              activeQuery === query ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-            } rounded-full font-bold mx-2`}
+            className={`whitespace-nowrap px-4 py-2 ${
+              activeQuery === query
+                ? 'text-white transition bg-gradient-to-r from-green-500 via-green-600 to-green-700'
+                : 'bg-gray-200 text-gray-700 hover:scale-105 duration-300'
+            } rounded-lg font-bold`}
             onClick={() => setActiveQuery(query)}
           >
             {query}
