@@ -159,11 +159,11 @@ const Feed = ({ onSelectMember }) => {
               </div>
             </form>
           ) : (
-            <div className="text-center">
+            <div className="text-center flex-row">
               <p className="text-gray-700 mb-4">You must log in to post.</p>
               <button
                 onClick={handleLogin}
-                className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition"
+                className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition"
               >
                 Log In
               </button>

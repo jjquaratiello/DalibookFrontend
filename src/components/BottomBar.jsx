@@ -26,10 +26,11 @@ const BottomBar = () => {
 
   return (
     <div
-      className="h-96 bg-white w-[calc(100vw-400px)] fixed bottom-0 left-96 py-4 border-t border-gray-200"
+      className="h-96 bg-white w-[calc(100vw-24rem)] fixed bottom-0 left-96 py-4 border-t border-gray-200"
     >
+      <div className='px-4 font-bold text-2xl'>Tutorials</div>
       {/* Fixed Buttons */}
-      <div className="flex items-center mb-4 sticky top-0 bg-white z-10 p-2 px-4 overflow-x-auto no-scrollbar space-x-4">
+      <div className="flex items-center mb-0 sticky top-0 bg-white z-10 p-2 px-4 overflow-x-auto no-scrollbar space-x-4">
         {[
           'Coding Tutorials',
           'JavaScript Coding Tutorials',
@@ -54,15 +55,18 @@ const BottomBar = () => {
       </div>
 
       {/* Scrollable Videos Section */}
-      <div className="overflow-y-auto h-[calc(100%-3.5rem)]">
+      <div className="overflow-y-auto h-[calc(100%-4.5rem)]">
         {loading ? (
           <p className="text-center text-gray-500">Loading...</p>
         ) : videos.length > 0 ? (
           <ul className="flex space-x-4">
             {videos.map((video) => (
-              <li
+              <a
                 key={video.videoId}
-                className="flex-shrink-0 w-72 h-64 bg-white p-4 rounded-lg transition"
+                href={`https://www.youtube.com/watch?v=${video.videoId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 w-72 h-64 bg-white p-4 rounded-lg hover:bg-green-50 transition cursor-pointer"
               >
                 <img
                   src={video.thumbnail}
@@ -71,15 +75,7 @@ const BottomBar = () => {
                 />
                 <h3 className="text-lg font-semibold truncate">{video.title}</h3>
                 <p className="text-gray-600 line-clamp-2">{video.description}</p>
-                <a
-                  href={`https://www.youtube.com/watch?v=${video.videoId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline mt-2 block"
-                >
-                  Watch on YouTube
-                </a>
-              </li>
+              </a>
             ))}
           </ul>
         ) : (
