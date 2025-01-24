@@ -72,7 +72,7 @@ const Navbar = () => {
         ) : (
           <button
             onClick={handleLogin}
-            className="flex items-center space-x-2 px-4 py-2 rounded-md border-2 border-green-400 text-white font-semibold transition hover:scale-105 bg-gradient-to-r from-green-500 via-green-400 to-green-300"
+            className="flex items-center space-x-2 px-4 py-2 rounded-md text-white font-semibold transition hover:scale-105 bg-gradient-to-r from-green-500 via-green-600 to-green-700"
           >
             <FaUserCircle size={20} />
             <span>Sign Up / Login</span>
