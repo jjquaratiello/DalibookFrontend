@@ -4,7 +4,7 @@ import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import ProfileView from "./ProfileView";
 import BottomBar from "./BottomBar";
 
-const Feed = () => {
+const Feed = ({ onSelectMember }) => {
   const [posts, setPosts] = useState([]); // Ensures posts is always an array
   const [content, setContent] = useState("");
   const [user, setUser] = useState("");
@@ -105,8 +105,9 @@ const Feed = () => {
   };
 
   return (
-    <div className="min-h-screen relative">
+    <div className="relative"> 
       {/* Create Post Input */}
+      <div className="mb-96">
       <div className="border-b border-gray-300 p-4 bg-white">
         <form onSubmit={handlePostSubmit} className="space-y-4">
           <input
@@ -114,13 +115,13 @@ const Feed = () => {
             placeholder="Your name (optional)"
             value={user}
             onChange={(e) => setUser(e.target.value)}
-            className="w-full text-black text-2xl py-2 rounded-md focus:outline-none"
+            className="w-full text-black text-3xl py-2 rounded-md focus:outline-none"
           />
           <textarea
             placeholder="What's happening?"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full text-black text-xl py-2 rounded-md focus:outline-none resize-none"
+            className="w-full text-black text-2xl py-2 rounded-md focus:outline-none resize-none"
             rows="3"
           ></textarea>
           <div className="flex justify-end">
@@ -185,6 +186,8 @@ const Feed = () => {
         {selectedMember && (
           <ProfileView member={selectedMember} />
         )}
+      </div>
+
       </div>
 
       <BottomBar />
