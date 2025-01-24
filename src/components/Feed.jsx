@@ -23,7 +23,7 @@ const Feed = ({ onSelectMember }) => {
     if (loading || !hasMorePosts) return; // Prevent multiple fetches while loading or if no more posts
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/feed?page=${page}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/feed?page=${page}`);
       const newPosts = response.data.posts || [];
       
       // Only update if there are new posts, and no duplicates
@@ -72,7 +72,7 @@ const Feed = ({ onSelectMember }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/feed", {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/feed`, {
         content,
         user: user.email,
       });
@@ -95,7 +95,7 @@ const Feed = ({ onSelectMember }) => {
 
     const handleLike = async (id) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/feed/${id}/like`);
+      const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/feed/${id}/like`);
       const updatedPost = response.data;
       setPosts((prevPosts) =>
         prevPosts.map((post) => (post._id === id ? updatedPost : post))
@@ -108,7 +108,7 @@ const Feed = ({ onSelectMember }) => {
   // Handle dislike functionality
   const handleDislike = async (id) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/feed/${id}/dislike`);
+      const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/feed/${id}/dislike`);
       const updatedPost = response.data;
       setPosts((prevPosts) =>
         prevPosts.map((post) => (post._id === id ? updatedPost : post))
