@@ -11,7 +11,7 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/members");
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/members`);
         setMembers(response.data);
       } catch (error) {
         console.error("Error fetching members:", error);

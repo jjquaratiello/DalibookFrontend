@@ -10,7 +10,7 @@ const BottomBar = () => {
   const fetchVideosByQuery = async (query) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/youtube/videos/${query}`); // Call to your backend endpoint
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/youtube/videos/${query}`);
       setVideos(response.data || []);
     } catch (error) {
       console.error(`Error fetching videos for query "${query}":`, error);
@@ -29,7 +29,7 @@ const BottomBar = () => {
       className="h-96 bg-white w-[calc(100vw-400px)] fixed bottom-0 left-96 py-4 border-t border-gray-200"
     >
       {/* Fixed Buttons */}
-      <div className="flex items-center mb-4 sticky top-0 bg-white z-10 p-2 overflow-x-auto no-scrollbar space-x-4">
+      <div className="flex items-center mb-4 sticky top-0 bg-white z-10 p-2 px-4 overflow-x-auto no-scrollbar space-x-4">
         {[
           'Coding Tutorials',
           'JavaScript Coding Tutorials',

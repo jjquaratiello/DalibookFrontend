@@ -93,7 +93,7 @@ const Feed = ({ onSelectMember }) => {
     }
   };
 
-  const handleLike = async (id) => {
+    const handleLike = async (id) => {
     try {
       const response = await axios.put(`http://localhost:5000/api/feed/${id}/like`);
       const updatedPost = response.data;
