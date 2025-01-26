@@ -12,7 +12,7 @@ const Sidebar = () => {
     const fetchMembers = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/members`);
-        setMembers(response.data);
+        setMembers(response.data.reverse());
       } catch (error) {
         console.error("Error fetching members:", error);
       }
@@ -43,7 +43,7 @@ const Sidebar = () => {
     >
       {/* Sticky Header */}
       <div className="p-2 pl-6 bg-white font-bold text-xl sticky top-0 z-10 shadow-md">
-        Featured Members
+        Members
       </div>
 
       {/* Members List */}
