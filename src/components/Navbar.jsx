@@ -43,16 +43,18 @@ const Navbar = () => {
   // Check if user is already in the database
   const checkFirstLogin = async (email) => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/members/${email}`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/members/${encodeURIComponent(email)}`
+      );
       console.log("Inside checkFirstLogin", response.data);
       if (!response.data.exists) {
-        setShowModal(true); 
+        setShowModal(true);
       }
     } catch (error) {
-      console.error('Error checking first login:', error);
+      console.error("Error checking first login:", error.response?.data || error.message);
     }
   };
-
+  
   // Handle login
   const handleLogin = async () => {
     const { data: session, error } = await supabase.auth.signInWithOAuth({
