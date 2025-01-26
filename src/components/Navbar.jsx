@@ -108,6 +108,15 @@ const Navbar = () => {
         <h1 className="text-2xl font-bold text-green-600">DaliBook</h1>
       </div>
 
+      <div className="flex space-x-6">
+        <Link to="/" className="hover:font-bold duration-300">
+          Home
+        </Link>
+        <Link to="/showcase" className="hover:font-bold duration-300">
+          Showcase
+        </Link>
+      </div>
+
       <div className="flex items-center">
         {user ? (
           <div className="flex items-center space-x-4">
