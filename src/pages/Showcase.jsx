@@ -10,7 +10,6 @@ import {
   Legend,
 } from "chart.js";
 
-// Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const Showcase = () => {
@@ -27,7 +26,7 @@ const Showcase = () => {
         const yearAggregate = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/members/aggregate/year`);
         const roleAggregate = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/members/aggregate/role`); // Example endpoint for roles
 
-        setMembers(membersResponse.data.reverse()); // Show latest members first
+        setMembers(membersResponse.data.reverse()); 
         setYearData(yearAggregate.data);
         setRoleData(roleAggregate.data);
       } catch (error) {
@@ -90,33 +89,29 @@ const Showcase = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg p-4">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">All Members</h2>
-        <table className="w-full border-collapse border border-gray-300 text-left">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border border-gray-300 p-2">Image</th>
-              <th className="border border-gray-300 p-2">Name</th>
-              <th className="border border-gray-300 p-2">Year</th>
-              <th className="border border-gray-300 p-2">Major</th>
-              <th className="border border-gray-300 p-2">Type</th>
-              <th className="border border-gray-300 p-2">Quote</th>
-            </tr>
-          </thead>
-          <tbody>
-            {members.map((member) => (
-              <tr key={member._id} className="hover:bg-gray-100 transition">
-                <td className="border border-gray-300 p-2">
-                  <img
-                    src={member.picture || "/avatar.jpg"}
-                    alt={member.name || "Member"}
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
-                </td>
-                <td className="border border-gray-300 p-2">{member.name || "N/A"}</td>
-                <td className="border border-gray-300 p-2">{member.year || "N/A"}</td>
-                <td className="border border-gray-300 p-2">{member.major || "N/A"}</td>
-                <td className="border border-gray-300 p-2">
+      <div className="p-6">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Members Directory</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {members.map((member) => (
+            <div
+              key={member._id}
+              className="bg-white rounded-xl border-2 p-4 flex flex-col items-center space-y-4"
+            >
+              {/* Profile Picture */}
+              <img
+                src={member.picture || "/avatar.jpg"}
+                alt={member.name || "Member"}
+                className="w-24 h-24 rounded-full object-cover shadow-lg"
+              />
+
+              {/* Member Info */}
+              <div className="text-center">
+                <h2 className="text-lg font-semibold text-gray-800">
+                  {member.name || "N/A"}
+                </h2>
+                <p className="text-sm text-gray-500">{member.year || "Year Unknown"}</p>
+                <p className="text-sm text-gray-500">{member.major || "Major Unknown"}</p>
+                <p className="text-sm text-gray-500">
                   {member.dev
                     ? "Developer"
                     : member.des
@@ -124,12 +119,21 @@ const Showcase = () => {
                     : member.pm
                     ? "Product Manager"
                     : "Other"}
-                </td>
-                <td className="border border-gray-300 p-2">{member.quote || "No quote"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </p>
+              </div>
+
+              {/* Quote */}
+              <div className="text-sm text-gray-600 italic line-clamp-3">
+                <p>"{member.quote || "No quote provided"}"</p>
+              </div>
+
+              {/* Fun Fact */}
+              <div className="text-sm text-gray-700 line-clamp-3">
+                <strong>Fun Fact:</strong> {member.funFact || "N/A"}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
