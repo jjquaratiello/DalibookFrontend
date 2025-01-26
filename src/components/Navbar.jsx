@@ -47,13 +47,16 @@ const Navbar = () => {
         `${import.meta.env.VITE_API_BASE_URL}/members/${email}`
       );
       console.log("Inside checkFirstLogin", response.data);
-      if (!response.data.exists) {
-        setShowModal(true);
+  
+      if (response.data.exists === false) {
+        console.log("First login detected, showing modal");
+        setShowModal(true); // Open modal if user is not found
       }
     } catch (error) {
       console.error("Error checking first login:", error.response?.data || error.message);
     }
   };
+  
   
   // Handle login
   const handleLogin = async () => {
