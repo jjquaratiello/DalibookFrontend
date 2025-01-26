@@ -26,6 +26,12 @@ const Sidebar = () => {
     setLoadingImages((prev) => ({ ...prev, [id]: false }));
   };
 
+  // Handle image error
+  const handleImageError = (e) => {
+    e.target.src = "/avatar.jpg"; // Fallback to the default avatar
+    e.target.classList.add("opacity-100"); // Ensure the fallback image is visible
+  };
+
   // Toggle dropdown for member details
   const toggleMemberDetails = (id) => {
     setExpandedMember((prev) => (prev === id ? null : id));
@@ -55,17 +61,16 @@ const Sidebar = () => {
                   {loadingImages[member._id] !== false && (
                     <div className="absolute inset-0 rounded-full bg-gray-200 animate-pulse"></div>
                   )}
-                  {member.picture && (
-                    <img
-                      src={member.picture}
-                      alt={member.name}
-                      className="w-12 h-12 rounded-full transition-opacity duration-500 opacity-0"
-                      onLoad={(e) => {
-                        e.target.style.opacity = 1;
-                        handleImageLoad(member._id);
-                      }}
-                    />
-                  )}
+                  <img
+                    src={member.picture || "/avatar.jpg"}
+                    alt={member.name}
+                    className="w-12 h-12 rounded-full transition-opacity duration-500 opacity-0"
+                    onLoad={(e) => {
+                      e.target.style.opacity = 1;
+                      handleImageLoad(member._id);
+                    }}
+                    onError={handleImageError} // Handle image loading errors
+                  />
                 </div>
                 <div className="overflow-hidden">
                   <div className="text-gray-800 font-semibold truncate">
