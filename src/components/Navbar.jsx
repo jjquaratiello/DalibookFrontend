@@ -23,20 +23,26 @@ const Navbar = () => {
     favoriteThing2: '',
     favoriteThing3: '',
     funFact: '',
-  }); 
+  });
 
+  
   useEffect(() => {
     const fetchUserSession = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        dispatch(setUser(user)); 
-        checkFirstLogin(user.email); 
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          dispatch(setUser(user));
+          await checkFirstLogin(user.email);
+        }
+      } catch (error) {
+        console.error('Error fetching user session:', error.message);
       }
     };
 
     fetchUserSession();
   }, [dispatch]);
 
+  // Check if the user is logging in for the first time
   const checkFirstLogin = async (email) => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/members/${email}`);
@@ -45,53 +51,60 @@ const Navbar = () => {
       }
     } catch (error) {
       if (error.response?.status === 404) {
-        setShowModal(true);
+        setShowModal(true); // Show modal if user not found
       } else {
-        console.error("Error checking first login:", error.response?.data || error.message);
+        console.error('Error checking first login:', error.response?.data || error.message);
       }
     }
   };
 
+  // Handle Google login
   const handleLogin = async () => {
-    const { data: session, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-    });
+    try {
+      const { data: session, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      });
 
-    if (error) {
-      console.error('Error signing in:', error);
-    } else {
-      const user = session?.user;
-      dispatch(setUser(user)); 
-      checkFirstLogin(user.email);
+      if (error) throw error;
+
+      if (session?.user) {
+        dispatch(setUser(session.user));
+        await checkFirstLogin(session.user.email);
+      }
+    } catch (error) {
+      console.error('Error during login:', error.message);
     }
   };
 
+  // Handle logout
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      console.error('Error signing out:', error);
-    } else {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
       dispatch(clearUser());
+    } catch (error) {
+      console.error('Error during logout:', error.message);
     }
   };
 
+  // Handle saving member details
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.post(`${import.meta.env.VITE_API_BASE_URL}/members`, {
         ...memberData,
-        email: user.email,
+        email: user.email, 
       });
-      setShowModal(false);
+      setShowModal(false); 
     } catch (error) {
-      console.error('Error adding member:', error);
+      console.error('Error adding member:', error.response?.data || error.message);
     }
   };
 
   return (
     <nav className="px-6 py-4 flex items-center fixed top-0 w-full bg-white z-50 border-b border-gray-200">
-      <div className="flex-grow items-center space-x-4">
+      {/* Logo */}
+      <div className="flex-grow">
         <h1 className="text-2xl font-bold text-green-600">DaliBook</h1>
       </div>
 

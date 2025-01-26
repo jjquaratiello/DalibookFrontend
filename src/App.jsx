@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MembersList from './components/MembersList';
 import Home from './pages/Home';
+import GroupsPage from './pages/GroupsPage'; // Import additional pages
+import Navbar from './components/Navbar'; // Example Navbar for navigation
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { supabase } from '../supabaseClient'; // Import Supabase client
 import { setUser, clearUser } from './store'; // Import Redux actions
-import { useEffect } from 'react';
+import Showcase from './pages/Showcase';
 
 const App = () => {
-
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    // Fetch the current user session on initial load
     const fetchUserSession = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
@@ -23,7 +24,6 @@ const App = () => {
 
     fetchUserSession();
 
-    // Listen to authentication state changes
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         dispatch(setUser(session.user));
@@ -32,7 +32,6 @@ const App = () => {
       }
     });
 
-    // Cleanup the subscription
     return () => {
       if (authListener?.subscription) {
         authListener.subscription.unsubscribe();
@@ -41,9 +40,15 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-white">
-      <Home/>
-    </div>
+    <Router>
+      <Navbar />
+      <div className="min-h-screen bg-white">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/showcase" element={<Showcase/>} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
