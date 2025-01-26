@@ -44,7 +44,7 @@ const Navbar = () => {
   const checkFirstLogin = async (email) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/members/${encodeURIComponent(email)}`
+        `${import.meta.env.VITE_API_BASE_URL}/members/${email}`
       );
       console.log("Inside checkFirstLogin", response.data);
       if (!response.data.exists) {
