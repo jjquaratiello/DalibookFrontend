@@ -40,7 +40,7 @@ const Navbar = () => {
     fetchUserSession();
   }, [dispatch]);
 
-  // Check if user is already in the database
+  
   const checkFirstLogin = async (email) => {
     try {
       const response = await axios.get(
@@ -50,12 +50,18 @@ const Navbar = () => {
   
       if (response.data.exists === false) {
         console.log("First login detected, showing modal");
-        setShowModal(true); // Open modal if user is not found
+        setShowModal(true);
       }
     } catch (error) {
-      console.error("Error checking first login:", error.response?.data || error.message);
+      if (error.response?.status === 404) {
+        console.log("Member not found, showing modal");
+        setShowModal(true);
+      } else {
+        console.error("Error checking first login:", error.response?.data || error.message);
+      }
     }
   };
+  
   
   
   // Handle login
