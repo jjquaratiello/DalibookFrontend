@@ -44,8 +44,9 @@ const Navbar = () => {
   const checkFirstLogin = async (email) => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/members/${email}`);
+      console.log("Inside checkFirstLogin", response.data);
       if (!response.data.exists) {
-        setShowModal(true); // Show modal if it's the user's first login
+        setShowModal(true); 
       }
     } catch (error) {
       console.error('Error checking first login:', error);
