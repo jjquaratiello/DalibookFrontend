@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MembersList from './components/MembersList';
 import Home from './pages/Home';
-import GroupsPage from './pages/GroupsPage'; // Import additional pages
 import Navbar from './components/Navbar'; // Example Navbar for navigation
 import './index.css';
 import { useDispatch, useSelector } from 'react-redux';
