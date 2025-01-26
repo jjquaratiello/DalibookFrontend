@@ -5,6 +5,7 @@ import { supabase } from '../../supabaseClient';
 import { FaUserCircle } from 'react-icons/fa';
 import { setUser, clearUser } from '../store';
 import ProfileModal from './ProfileModal';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -104,18 +105,18 @@ const Navbar = () => {
   return (
     <nav className="px-6 py-4 flex items-center fixed top-0 w-full bg-white z-50 border-b border-gray-200">
       {/* Logo */}
-      <div className="flex-grow">
+      <div className="flex-grow flex flex-row items-center space-x-6">
         <h1 className="text-2xl font-bold text-green-600">DaliBook</h1>
+        <div className="flex space-x-6">
+          <Link to="/" className="hover:bg-black hover:text-white p-2 rounded-xl duration-300">
+            Home
+          </Link>
+          <Link to="/showcase" className="hover:bg-black hover:text-white p-2 rounded-xl duration-300">
+            API Showcase
+          </Link>
+        </div>
       </div>
 
-      <div className="flex space-x-6">
-        <Link to="/" className="hover:font-bold duration-300">
-          Home
-        </Link>
-        <Link to="/showcase" className="hover:font-bold duration-300">
-          Showcase
-        </Link>
-      </div>
 
       <div className="flex items-center">
         {user ? (
